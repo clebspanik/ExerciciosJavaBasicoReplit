@@ -1,0 +1,89 @@
+{
+  "files": {}
+}
+compile = "javac -classpath .:target/dependency/* -d . $(find . -type f -name '*.java')"
+run = ["java", "-classpath", ".:target/dependency/*", "Main"]
+
+entrypoint = "Main.java"
+hidden = ["**/*.class"]
+
+[packager]
+language = "java"
+
+[packager.features]
+packageSearch = true
+
+[languages.java]
+pattern = "**/*.java"
+
+[languages.java.languageServer]
+start = ["jdt-language-server"]
+
+[unitTest]
+language = "java"
+
+[nix]
+channel = "stable-21_11"
+
+[debugger]
+support = true
+
+[debugger.compile]
+command = "javac -classpath .:/run_dir/junit-4.12.jar:target/dependency/* -g -d . $(find . -type f -name '*.java')"
+
+[debugger.interactive]
+transport = "localhost:0"
+connectTimeout = 60
+startCommand = "java-debug"
+
+[debugger.interactive.initializeMessage]
+command = "initialize"
+type = "request"
+
+[debugger.interactive.initializeMessage.arguments]
+adapterID = "cppdbg"
+clientID = "replit"
+clientName = "replit.com"
+columnsStartAt1 = true
+linesStartAt1 = true
+locale = "en-us"
+pathFormat = "path"
+supportsInvalidatedEvent = true
+supportsProgressReporting = true
+supportsRunInTerminalRequest = true
+supportsVariablePaging = true
+supportsVariableType = true
+
+[debugger.interactive.launchMessage]
+command = "launch"
+type = "request"
+
+[debugger.interactive.launchMessage.arguments]
+classPaths = ["."]
+mainClass = "Main"
+
+
+class Main {
+  public static void main(String[] args) {
+
+  //posição dos vetores e valores
+    
+  String mes [] = {3, 2, 8, 7, 5, 4,};
+  System.out.println("Total de casas de N " + n.length);
+    for (int c=0; c<=5; c++){
+      System.out.println(" Na posição de " + c + " temos o valor " + n [c]);
+
+
+      
+    }
+    
+  }
+}
+{ pkgs }: {
+    deps = [
+        pkgs.graalvm17-ce
+        pkgs.maven
+        pkgs.replitPackages.jdt-language-server
+        pkgs.replitPackages.java-debug
+    ];
+}
